@@ -1,0 +1,40 @@
+import paramiko,time
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.keep_this = client
+
+
+
+# client = paramiko.SSHClient()
+# client.set_missing_host_key_policy(AllowAnythingPolicy())
+def login(client):
+    return client.connect('mkt-ams5-cem1', username='a-amits',password = '@')
+
+
+def execute_command (login,command):
+    #print("connected")
+    stdin,stdout,stderr = client.exec_command(command)
+    output = stdout.readlines()
+    print (f"printing output for command ***{command}***")
+    for line in output[3:]:print(line.strip())
+    #stdin.flush()
+    #print ("\nAll the channel closed")
+    print ("\n************************************************")
+
+client.close()
+
+## Use this to execute multiple command
+# command1 = "show clock"
+# command2 = "show users"
+# command3 = "show ip int brief"
+
+# execute_command(login=login(client),command=command1)
+# execute_command(login=login(client),command=command2)
+# execute_command(login=login(client),command=command3)
+
+## Or use this one to execute to multiple commands. Best way.
+commands = ['show clock', 'show users','show ip int brief',"sh ip arp"]
+
+for command in commands:
+    execute_command(login=login(client),command=command)
+
