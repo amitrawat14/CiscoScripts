@@ -8,7 +8,7 @@ client.keep_this = client
 # client = paramiko.SSHClient()
 # client.set_missing_host_key_policy(AllowAnythingPolicy())
 def login(client):
-    return client.connect('mkt-ams5-cem1', username='a-amits',password = '@')
+    return client.connect('192.168.1.1', username='a-amits',password = '@')
 
 
 def execute_command (login,command):
